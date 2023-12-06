@@ -1,13 +1,21 @@
+import 'package:exerciser/config/tags.dart';
 import 'package:flutter/material.dart';
 
 import 'package:exerciser/services/hive_access.dart';
-import 'package:exerciser/models/muscle_group.dart';
+import 'tag.dart';
+import 'muscle.dart';
 
 class Exercise {
   String name;
-  Map<MuscleGroup, double> affectedMuscles;
+  Map<Muscle, double> affectedMuscles;
+  Set<Tag> tags;
 
-  Exercise(this.name, this.affectedMuscles);
+  Exercise(this.name, this.affectedMuscles, Set<Tag> tags)
+      : tags = tags.toSet() {
+    for (Muscle muscle in affectedMuscles.keys) {
+      tags.add(Tags.getMuscleTag(muscle));
+    }
+  }
 
   Widget getImage() {
     var images = <Widget>[];
@@ -29,5 +37,4 @@ class Exercise {
   void recordRepeats(int repeats) {
     access.recordRepeats(name, repeats);
   }
-
 }

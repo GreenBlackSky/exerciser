@@ -1,10 +1,8 @@
-import 'dart:math';
-
 import 'package:exerciser/models/exercise.dart';
-import 'package:exerciser/services/notification_service.dart';
+// import 'package:exerciser/services/notification_service.dart';
 import 'package:flutter/material.dart';
 
-import 'package:exerciser/models/exercises_config.dart';
+import 'package:exerciser/config/exercises.dart';
 
 class ExerciseWidget extends StatefulWidget {
   const ExerciseWidget({
@@ -18,22 +16,21 @@ class ExerciseWidget extends StatefulWidget {
 class _ExerciseWidgetState extends State<ExerciseWidget> {
   final TextEditingController _repeatsController = TextEditingController();
 
-  int _exerciseID = Random().nextInt(exercises.length);
+  Exercise _currentExercise = Exercises.getRandomExercise();
   bool isANumber = true;
 
   @override
   Widget build(BuildContext context) {
-    var exercise = exercises[_exerciseID]!;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            exercise.name,
+            _currentExercise.name,
             style: const TextStyle(fontSize: 40),
           ),
-          Expanded(child: exercise.getImage()),
-          retpeatsText(exercise),
+          Expanded(child: _currentExercise.getImage()),
+          repeatsText(_currentExercise),
           OverflowBar(
             overflowAlignment: OverflowBarAlignment.center,
             alignment: MainAxisAlignment.spaceAround,
@@ -41,7 +38,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
             children: [
               RecordInputField(
                   repeatsController: _repeatsController, isANumber: isANumber),
-              doneButton(exercise),
+              doneButton(_currentExercise),
               nextExerciseButton()
             ],
           )
@@ -50,7 +47,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
     );
   }
 
-  Text retpeatsText(Exercise exercise) {
+  Text repeatsText(Exercise exercise) {
     int? maxRepeats = exercise.getMaxRepeats();
     return Text(
       maxRepeats != null
@@ -63,9 +60,8 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
   TextButton nextExerciseButton() {
     return TextButton(
       onPressed: () {
-        NotificationService().displayText("Skippin ehh?");
         setState(() {
-          _exerciseID = Random().nextInt(exercises.length);
+          _currentExercise = Exercises.getRandomExercise();
           _repeatsController.clear();
         });
       },

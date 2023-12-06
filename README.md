@@ -10,13 +10,13 @@ Exercise at home app
 * transperant muscle groups +
 * add storage +
 * add counter and remember previous counts +
-* exercise tags: power, stretch, warm-up, dance, fight
+* exercise tags: power, stretch, warm-up, dance, fight +
 * exercise search
 * schedule page
-* notifications
+* notifications +
 * add all exercises
 * add testing mode
-* statistics
+* statistics page
 * weight next exercise based on muscle groups
 * dynamic multipliers
 * add calories
