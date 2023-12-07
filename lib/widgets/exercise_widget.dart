@@ -1,8 +1,9 @@
-import 'package:exerciser/models/exercise.dart';
 // import 'package:exerciser/services/notification_service.dart';
 import 'package:flutter/material.dart';
 
+import 'package:exerciser/models/tag.dart';
 import 'package:exerciser/config/exercises.dart';
+import 'package:exerciser/models/exercise.dart';
 
 class ExerciseWidget extends StatefulWidget {
   const ExerciseWidget({
@@ -31,6 +32,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
           ),
           Expanded(child: _currentExercise.getImage()),
           repeatsText(_currentExercise),
+          getTagsRow(),
           OverflowBar(
             overflowAlignment: OverflowBarAlignment.center,
             alignment: MainAxisAlignment.spaceAround,
@@ -43,6 +45,25 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
             ],
           )
         ],
+      ),
+    );
+  }
+
+  Widget getTagsRow() {
+    return Row(children: _currentExercise.tags.map(getTagWidget).toList());
+  }
+
+  Widget getTagWidget(Tag tag) {
+    return Container(
+      decoration:  BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+        color: tag.color,
+      ),
+      margin: const EdgeInsets.symmetric(horizontal: 5.0),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+      child: InkWell(
+        child: Text('#${tag.name}', style: const TextStyle(color: Colors.white)),
+        onTap: () {},
       ),
     );
   }
