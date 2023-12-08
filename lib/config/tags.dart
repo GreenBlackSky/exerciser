@@ -38,27 +38,27 @@ class Tags {
   static Tag flexability = Tag("flexability", Colors.green);
   static Tag warmup = Tag("warmup", Colors.orange);
   static Tag dance = Tag("dance", Colors.purple);
-  static Tag fight = Tag("warmup", Colors.grey);
+  static Tag fight = Tag("fight", Colors.grey);
 
   static Tag biceps = Tag("biceps", Colors.red);
-  static Tag pectoralisMajor = Tag("pectoralisMajor", Colors.red);
+  static Tag pectoralisMajor = Tag("pectoralis major", Colors.red);
   static Tag abdominals = Tag("abdominals", Colors.red);
   static Tag satorius = Tag("satorius", Colors.red);
   static Tag abductors = Tag("abductors", Colors.red);
-  static Tag seratosAnterior = Tag("seratosAnterior", Colors.red);
-  static Tag fingerFlexors = Tag("fingerFlexors", Colors.red);
+  static Tag seratosAnterior = Tag("seratos anterior", Colors.red);
+  static Tag fingerFlexors = Tag("finger flexors", Colors.red);
   static Tag quadrocips = Tag("quadrocips", Colors.red);
-  static Tag tibialisAnterior = Tag("tibialisAnterior", Colors.red);
+  static Tag tibialisAnterior = Tag("tibialis anterior", Colors.red);
   static Tag soleus = Tag("soleus", Colors.red);
-  static Tag latissimusDorsi = Tag("latissimusDorsi", Colors.red);
+  static Tag latissimusDorsi = Tag("latissimus dorsi", Colors.red);
   static Tag infraspinatus = Tag("infraspinatus", Colors.red);
   static Tag triceps = Tag("triceps", Colors.red);
-  static Tag fingerExtensors = Tag("fingerExtensors", Colors.red);
-  static Tag gluteusMaximus = Tag("gluteusMaximus", Colors.red);
+  static Tag fingerExtensors = Tag("finger extensors", Colors.red);
+  static Tag gluteusMaximus = Tag("gluteus maximus", Colors.red);
   static Tag hamstrings = Tag("hamstrings", Colors.red);
   static Tag trapezoids = Tag("trapezoids", Colors.red);
   static Tag deltoid = Tag("deltoid", Colors.red);
-  static Tag externalOblique = Tag("externalOblique", Colors.red);
+  static Tag externalOblique = Tag("external oblique", Colors.red);
   static Tag brachioradialis = Tag("brachioradialis", Colors.red);
   static Tag gastrocnemius = Tag("gastrocnemius", Colors.red);
 }

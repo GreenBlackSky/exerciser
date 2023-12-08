@@ -22,7 +22,7 @@ class Exercises {
       Muscles.triceps: 0.7,
     },
     {
-      Tags.strength,
+      Tags.strength, Tags.fight, Tags.dance
     },
   );
   static var squats = Exercise(

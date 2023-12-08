@@ -18,7 +18,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
   final TextEditingController _repeatsController = TextEditingController();
 
   Exercise _currentExercise = Exercises.getRandomExercise();
-  bool isANumber = true;
+  bool _isANumber = true;
 
   @override
   Widget build(BuildContext context) {
@@ -31,50 +31,62 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
             style: const TextStyle(fontSize: 40),
           ),
           Expanded(child: _currentExercise.getImage()),
-          repeatsText(_currentExercise),
-          getTagsRow(),
-          OverflowBar(
-            overflowAlignment: OverflowBarAlignment.center,
-            alignment: MainAxisAlignment.spaceAround,
-            spacing: 8,
-            children: [
-              RecordInputField(
-                  repeatsController: _repeatsController, isANumber: isANumber),
-              doneButton(_currentExercise),
-              nextExerciseButton()
-            ],
-          )
+          repeatsText(),
+          getTagsWidget(),
+          getBottomBar()
         ],
       ),
     );
   }
 
-  Widget getTagsRow() {
-    return Row(children: _currentExercise.tags.map(getTagWidget).toList());
+  Text repeatsText() {
+    int? maxRepeats = _currentExercise.getMaxRepeats();
+    return Text(
+      maxRepeats != null
+          ? "${(maxRepeats * 0.6).round()}/$maxRepeats"
+          : "Test first",
+      style: const TextStyle(fontSize: 40),
+    );
+  }
+
+  Widget getTagsWidget() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Wrap(
+        runSpacing: 2.0,
+        children: _currentExercise.tags.map(getTagWidget).toList(),
+      ),
+    );
   }
 
   Widget getTagWidget(Tag tag) {
     return Container(
-      decoration:  BoxDecoration(
+      decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(20.0)),
         color: tag.color,
       ),
       margin: const EdgeInsets.symmetric(horizontal: 5.0),
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
       child: InkWell(
-        child: Text('#${tag.name}', style: const TextStyle(color: Colors.white)),
+        child:
+            Text('#${tag.name}', style: const TextStyle(color: Colors.white)),
         onTap: () {},
       ),
     );
   }
 
-  Text repeatsText(Exercise exercise) {
-    int? maxRepeats = exercise.getMaxRepeats();
-    return Text(
-      maxRepeats != null
-          ? "${(maxRepeats * 0.6).round()}/$maxRepeats"
-          : "Test first",
-      style: const TextStyle(fontSize: 40),
+  Widget getBottomBar() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          nextExerciseButton(),
+          getRepsInputField(),
+          doneButton(),
+        ],
+      ),
     );
   }
 
@@ -90,14 +102,30 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
     );
   }
 
-  TextButton doneButton(Exercise exercise) {
+  SizedBox getRepsInputField() {
+    return SizedBox(
+      width: 100,
+      height: 80,
+      child: TextField(
+        controller: _repeatsController,
+        keyboardType: TextInputType.number,
+        maxLength: 3,
+        decoration: InputDecoration(
+          border: const OutlineInputBorder(),
+          errorText: _isANumber ? null : "Enter a number",
+        ),
+      ),
+    );
+  }
+
+  TextButton doneButton() {
     return TextButton(
       onPressed: () {
         setState(() {
           var inputValue = _repeatsController.text;
           validate(inputValue);
-          if (isANumber) {
-            exercise.recordRepeats(int.parse(inputValue));
+          if (_isANumber) {
+            _currentExercise.recordRepeats(int.parse(inputValue));
           }
         });
       },
@@ -108,40 +136,12 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
   void validate(String input) {
     if (input.isEmpty || !RegExp("[0-9]+").hasMatch(input)) {
       setState(() {
-        isANumber = false;
+        _isANumber = false;
       });
     } else {
       setState(() {
-        isANumber = true;
+        _isANumber = true;
       });
     }
-  }
-}
-
-class RecordInputField extends StatelessWidget {
-  const RecordInputField({
-    super.key,
-    required TextEditingController repeatsController,
-    required this.isANumber,
-  }) : _repeatsController = repeatsController;
-
-  final TextEditingController _repeatsController;
-  final bool isANumber;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 100,
-      height: 80,
-      child: TextField(
-        controller: _repeatsController,
-        keyboardType: TextInputType.number,
-        maxLength: 3,
-        decoration: InputDecoration(
-          border: const OutlineInputBorder(),
-          errorText: isANumber ? null : "Enter a number",
-        ),
-      ),
-    );
   }
 }

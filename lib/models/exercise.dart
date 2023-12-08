@@ -13,7 +13,7 @@ class Exercise {
   Exercise(this.name, this.affectedMuscles, Set<Tag> tags)
       : tags = tags.toSet() {
     for (Muscle muscle in affectedMuscles.keys) {
-      tags.add(Tags.getMuscleTag(muscle));
+      this.tags.add(Tags.getMuscleTag(muscle));
     }
   }
 
