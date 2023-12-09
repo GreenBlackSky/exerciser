@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'pages/home_page.dart';
+import 'pages/search_page.dart';
 import 'services/notification_service.dart';
 
 void main() async {
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Exerciser'),
+      home: const HomePage(title: 'Exerciser'),
+      // home: const SearchPage(title: 'Exerciser'),
     );
   }
 }

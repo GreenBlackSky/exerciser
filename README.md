@@ -24,3 +24,4 @@ Exercise at home app
 * choose gender
 * check weight
 * nutrition
+* water consumption

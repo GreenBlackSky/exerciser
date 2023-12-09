@@ -1,6 +1,6 @@
-import 'package:exerciser/config/tags.dart';
 import 'package:flutter/material.dart';
 
+import 'package:exerciser/config/tags.dart';
 import 'package:exerciser/services/hive_access.dart';
 import 'tag.dart';
 import 'muscle.dart';
@@ -15,6 +15,7 @@ class Exercise {
     for (Muscle muscle in affectedMuscles.keys) {
       this.tags.add(Tags.getMuscleTag(muscle));
     }
+    this.tags.add(Tags.createExerciseTag(name.toLowerCase(), Colors.yellow));
   }
 
   Widget getImage() {

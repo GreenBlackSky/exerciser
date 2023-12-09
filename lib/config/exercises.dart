@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:exerciser/models/exercise.dart';
 import 'package:exerciser/config/muscles.dart';
-import 'package:exerciser/config/Tags.dart';
+import 'package:exerciser/config/tags.dart';
 
 class Exercises {
   static final _allExercises = [
