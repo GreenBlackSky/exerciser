@@ -11,11 +11,16 @@ Exercise at home app
 * add storage +
 * add counter and remember previous counts +
 * exercise tags: power, stretch, warm-up, dance, fight +
-* exercise search
-* schedule page
+* exercise search +
+* open exercise from search
 * notifications +
+* timer and time instead of reps
 * add all exercises
+* timed notifications
+* schedule page
 * add testing mode
+* home page
+* trainings as lists or by tags
 * statistics page
 * weight next exercise based on muscle groups
 * dynamic multipliers

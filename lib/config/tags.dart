@@ -31,6 +31,15 @@ class Tags {
     return ret;
   }
 
+  static Tag? getByName(String name) {
+    for(Tag tag in getAllTags()) {
+      if (tag.name == name) {
+        return tag;
+      }
+    }
+    return null;
+  }
+
   static Tag createExerciseTag(String name, Color color) {
     var tag = Tag(name, color);
     _exerciseTags.add(tag);
