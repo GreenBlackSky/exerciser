@@ -1,33 +1,32 @@
+import 'package:exerciser/config/config.dart';
+import 'package:exerciser/models/exercise.dart';
 import 'package:flutter/material.dart';
 
 import 'package:exerciser/widgets/exercise_widget.dart';
 
 import 'search_page.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key, required this.title});
-  final String title;
+class ExercisePage extends StatelessWidget {
+  const ExercisePage({super.key, required this.currentExercise});
+  final Exercise currentExercise;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(title),
-        actions: [SearchButton(title: title)],
+        title: const Text(title),
+        actions: const [SearchButton()],
       ),
-      body: const ExerciseWidget(),
+      body: ExerciseWidget(currentExercise: currentExercise),
     );
   }
 }
 
 class SearchButton extends StatelessWidget {
   const SearchButton({
-    super.key,
-    required this.title,
+    super.key
   });
-
-  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +35,7 @@ class SearchButton extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => SearchPage(title: title),
+            builder: (context) => const SearchPage(),
           ),
         );
       },

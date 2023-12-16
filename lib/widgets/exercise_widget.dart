@@ -2,13 +2,15 @@
 import 'package:flutter/material.dart';
 
 import 'package:exerciser/models/tag.dart';
-import 'package:exerciser/config/exercises.dart';
+// import 'package:exerciser/config/exercises.dart';
 import 'package:exerciser/models/exercise.dart';
 
 class ExerciseWidget extends StatefulWidget {
   const ExerciseWidget({
-    super.key,
+    super.key, required this.currentExercise,
   });
+
+  final Exercise currentExercise;
 
   @override
   State<ExerciseWidget> createState() => _ExerciseWidgetState();
@@ -17,7 +19,6 @@ class ExerciseWidget extends StatefulWidget {
 class _ExerciseWidgetState extends State<ExerciseWidget> {
   final TextEditingController _repeatsController = TextEditingController();
 
-  Exercise _currentExercise = Exercises.getRandomExercise();
   bool _isANumber = true;
 
   @override
@@ -27,10 +28,10 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            _currentExercise.name,
+            widget.currentExercise.name,
             style: const TextStyle(fontSize: 40),
           ),
-          Expanded(child: _currentExercise.getImage()),
+          Expanded(child: widget.currentExercise.getImage()),
           repeatsText(),
           getTagsWidget(),
           getBottomBar()
@@ -40,7 +41,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
   }
 
   Text repeatsText() {
-    int? maxRepeats = _currentExercise.getMaxRepeats();
+    int? maxRepeats = widget.currentExercise.getMaxRepeats();
     return Text(
       maxRepeats != null
           ? "${(maxRepeats * 0.6).round()}/$maxRepeats"
@@ -54,7 +55,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
       padding: const EdgeInsets.all(8.0),
       child: Wrap(
         runSpacing: 2.0,
-        children: _currentExercise.tags.map(getTagWidget).toList(),
+        children: widget.currentExercise.tags.map(getTagWidget).toList(),
       ),
     );
   }
@@ -82,7 +83,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          nextExerciseButton(),
+          // nextExerciseButton(),
           getRepsInputField(),
           doneButton(),
         ],
@@ -90,17 +91,17 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
     );
   }
 
-  TextButton nextExerciseButton() {
-    return TextButton(
-      onPressed: () {
-        setState(() {
-          _currentExercise = Exercises.getRandomExercise();
-          _repeatsController.clear();
-        });
-      },
-      child: const Icon(Icons.update),
-    );
-  }
+  // TextButton nextExerciseButton() {
+  //   return TextButton(
+  //     onPressed: () {
+  //       setState(() {
+  //         _currentExercise = Exercises.getRandomExercise();
+  //         _repeatsController.clear();
+  //       });
+  //     },
+  //     child: const Icon(Icons.update),
+  //   );
+  // }
 
   SizedBox getRepsInputField() {
     return SizedBox(
@@ -125,7 +126,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
           var inputValue = _repeatsController.text;
           validate(inputValue);
           if (_isANumber) {
-            _currentExercise.recordRepeats(int.parse(inputValue));
+            widget.currentExercise.recordRepeats(int.parse(inputValue));
           }
         });
       },

@@ -3,6 +3,7 @@ import 'package:exerciser/config/exercises.dart';
 import 'package:exerciser/config/tags.dart';
 import 'package:exerciser/models/exercise.dart';
 import 'package:exerciser/models/tag.dart';
+import 'package:exerciser/pages/exercise_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:textfield_tags/textfield_tags.dart';
@@ -89,28 +90,32 @@ class _SearchWidgetState extends State<SearchWidget> {
               itemCount: options.length,
               itemBuilder: (BuildContext context, int index) {
                 final dynamic option = options.elementAt(index);
-                return TextButton(
-                  onPressed: () {
-                    setState(() {
-                      onSelected(option);
-                      updateSearchResults();
-                    });
-                  },
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 15.0),
-                      child: Text(
-                        '#$option',
-                        textAlign: TextAlign.left,
-                        style: const TextStyle(
-                          color: Color.fromARGB(255, 74, 137, 92),
-                        ),
-                      ),
-                    ),
-                  ),
-                );
+                return getOptionButton(onSelected, option);
               },
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  TextButton getOptionButton(onSelected, option) {
+    return TextButton(
+      onPressed: () {
+        setState(() {
+          onSelected(option);
+          updateSearchResults();
+        });
+      },
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15.0),
+          child: Text(
+            '#$option',
+            textAlign: TextAlign.left,
+            style: const TextStyle(
+              color: Color.fromARGB(255, 74, 137, 92),
             ),
           ),
         ),
@@ -234,7 +239,14 @@ class _SearchWidgetState extends State<SearchWidget> {
           itemBuilder: (BuildContext context, int index) {
             final dynamic option = _searchResults.elementAt(index);
             return TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ExercisePage(currentExercise: option),
+                  ),
+                );
+              },
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
