@@ -1,4 +1,5 @@
 // import 'package:exerciser/services/notification_service.dart';
+import 'package:exerciser/pages/search_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:exerciser/models/tag.dart';
@@ -7,7 +8,8 @@ import 'package:exerciser/models/exercise.dart';
 
 class ExerciseWidget extends StatefulWidget {
   const ExerciseWidget({
-    super.key, required this.currentExercise,
+    super.key,
+    required this.currentExercise,
   });
 
   final Exercise currentExercise;
@@ -71,7 +73,14 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
       child: InkWell(
         child:
             Text('#${tag.name}', style: const TextStyle(color: Colors.white)),
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SearchPage(initialTag: tag),
+            ),
+          );
+        },
       ),
     );
   }

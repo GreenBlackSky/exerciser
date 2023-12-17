@@ -12,12 +12,13 @@ Exercise at home app
 * add counter and remember previous counts +
 * exercise tags: power, stretch, warm-up, dance, fight +
 * exercise search +
-* open exercise from search
+* open exercise from search +
 * notifications +
 * timer and time instead of reps
+* exercise description and icon
 * add all exercises
-* timed notifications
 * schedule page
+* timed notifications
 * add testing mode
 * home page
 * trainings as lists or by tags

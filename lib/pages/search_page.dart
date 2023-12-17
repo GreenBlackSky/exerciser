@@ -1,11 +1,13 @@
 // import 'package:exerciser/pages/exercise_page.dart';
 import 'package:exerciser/config/config.dart';
+import 'package:exerciser/models/tag.dart';
 import 'package:flutter/material.dart';
 
 import 'package:exerciser/widgets/search_widget.dart';
 
 class SearchPage extends StatelessWidget {
-  const SearchPage({super.key});
+  const SearchPage({super.key, this.initialTag});
+  final Tag? initialTag;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class SearchPage extends StatelessWidget {
         title: const Text(title),
         // actions: [HomeButton(title: title)],
       ),
-      body: const SearchWidget(),
+      body: SearchWidget(initialTag:initialTag),
     );
   }
 }

@@ -9,7 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 
 class SearchWidget extends StatefulWidget {
-  const SearchWidget({super.key});
+  const SearchWidget({super.key, this.initialTag});
+  final Tag? initialTag;
 
   @override
   State<SearchWidget> createState() => _SearchWidgetState();
@@ -34,6 +35,9 @@ class _SearchWidgetState extends State<SearchWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if(widget.initialTag != null) {
+      _searchResults = Exercises.getByTags({widget.initialTag!});
+    }
     return Column(
       children: [
         getSearchField(),
@@ -130,15 +134,17 @@ class _SearchWidgetState extends State<SearchWidget> {
       textfieldTagsController: _controller,
       textSeparators: const [' ', ','],
       letterCase: LetterCase.normal,
-      // validator: (String tag) {
-      //   if (tag == 'php') {
-      //     return 'No, please just no';
-      //   } else if (_controller.getTags!.contains(tag)) {
-      //     return 'you already entered that';
-      //   }
-      //   return null;
-      // },
+      validator: (String tagName) {
+        Tag? tag = Tags.getByName(tagName);
+        if (tag == null) {
+          return 'no such tag';
+        } else if (_controller.getTags!.contains(tagName)) {
+          return 'tag already used';
+        }
+        return null;
+      },
       inputfieldBuilder: inputfieldBuilder,
+      initialTags: widget.initialTag != null ? [widget.initialTag!.name] : [],
     );
   }
 
@@ -158,17 +164,12 @@ class _SearchWidgetState extends State<SearchWidget> {
           focusNode: fn,
           decoration: InputDecoration(
             border: const UnderlineInputBorder(
-              borderSide: BorderSide(
-                  color: Color.fromARGB(255, 74, 137, 92), width: 3.0),
+              borderSide: BorderSide(width: 3.0),
             ),
             focusedBorder: const UnderlineInputBorder(
-              borderSide: BorderSide(
-                  color: Color.fromARGB(255, 74, 137, 92), width: 3.0),
+              borderSide: BorderSide(width: 3.0),
             ),
             helperText: 'Enter tags...',
-            helperStyle: const TextStyle(
-              color: Color.fromARGB(255, 74, 137, 92),
-            ),
             hintText: _controller.hasTags ? '' : "Enter tag...",
             errorText: error,
             prefixIconConstraints:
@@ -191,22 +192,21 @@ class _SearchWidgetState extends State<SearchWidget> {
     });
   }
 
-  Container getTagButton(String tag, void Function(String) onTagDelete) {
+  Container getTagButton(String tagName, void Function(String) onTagDelete) {
+    var tag = Tags.getByName(tagName)!;
     return Container(
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(
-          Radius.circular(20.0),
-        ),
-        color: Color.fromARGB(255, 74, 137, 92),
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+        color: tag.color,
       ),
-      margin: const EdgeInsets.only(right: 10.0),
-      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
+      margin: const EdgeInsets.symmetric(horizontal: 5.0),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           InkWell(
             child: Text(
-              '#$tag',
+              '#${tag.name}',
               style: const TextStyle(color: Colors.white),
             ),
             onTap: () {},
@@ -220,7 +220,7 @@ class _SearchWidgetState extends State<SearchWidget> {
             ),
             onTap: () {
               setState(() {
-                onTagDelete(tag);
+                onTagDelete(tag.name);
                 updateSearchResults();
               });
             },
